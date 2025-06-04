@@ -1,0 +1,145 @@
+# version: '3.9'
+
+services:
+  # Catalog service
+  catalog-service:
+    build:
+      context: .
+      dockerfile: CatalogDockerfile
+    container_name: catalog-service
+    ports:
+      - "8997:8997"
+    volumes:
+      - ./src/catalog_service:/app
+    environment:
+      - CATALOG_HOST=0.0.0.0
+      - CATALOG_PORT=8997
+    networks:
+      - stock-net
+
+  # Order service replica 1
+  order-service-1:
+    build:
+      context: .
+      dockerfile: OrderDockerfile
+    container_name: order-service-1
+    ports:
+      - "8998:8998"
+    volumes:
+      - ./src/order_service:/app
+    environment:
+      - REPLICA_ID=1
+      - ORDER_PORT=8998
+      - ORDER_LOG_FILE=order_log_1.csv
+      - CATALOG_HOST=catalog-service
+      - CATALOG_PORT=8997
+    depends_on:
+      - catalog-service
+    networks:
+      - stock-net
+
+  # Order service replica 2
+  order-service-2:
+    build:
+      context: .
+      dockerfile: OrderDockerfile
+    container_name: order-service-2
+    ports:
+      - "8999:8999"
+    volumes:
+      - ./src/order_service:/app
+    environment:
+      - REPLICA_ID=2
+      - ORDER_PORT=8999
+      - ORDER_LOG_FILE=order_log_2.csv
+      - CATALOG_HOST=catalog-service
+      - CATALOG_PORT=8997
+    depends_on:
+      - catalog-service
+    networks:
+      - stock-net
+
+  # Order service replica 3
+  order-service-3:
+    build:
+      context: .
+      dockerfile: OrderDockerfile
+    container_name: order-service-3
+    ports:
+      - "9000:9000"
+    volumes:
+      - ./src/order_service:/app
+    environment:
+      - REPLICA_ID=3
+      - ORDER_PORT=9000
+      - ORDER_LOG_FILE=order_log_3.csv
+      - CATALOG_HOST=catalog-service
+      - CATALOG_PORT=8997
+    depends_on:
+      - catalog-service
+    networks:
+      - stock-net
+
+  # Frontend service
+  frontend-service:
+    build:
+      context: .
+      dockerfile: FrontendDockerfile
+    container_name: frontend-service
+    ports:
+      - "9001:9001"
+    environment:
+      - CATALOG_SERVICE_URL=http://catalog-service:8997
+      - ORDER_SERVICE_URLS=http://order-service-1:8998,http://order-service-2:8999,http://order-service-3:9000
+      - FRONTEND_PORT=9001
+    depends_on:
+      - catalog-service
+      - order-service-1
+      - order-service-2
+      - order-service-3
+    networks:
+      - stock-net
+
+  # Client service
+  client-service:
+    build:
+      context: .
+      dockerfile: ClientDockerfile
+    container_name: client-service
+    depends_on:
+      - frontend-service
+    volumes:
+      - ./src/client:/app
+    environment:
+      - FRONTEND_SERVICE_URL=http://frontend-service:9001
+    networks:
+      - stock-net
+
+  test:
+    build:
+      context: .
+      dockerfile: TestDockerfile
+    container_name: test
+    depends_on:
+      - catalog-service
+      - order-service-1
+      - frontend-service
+    volumes:
+      - ./test:/app/test
+    environment:
+      # ensure tests target the right hostnames
+      CATALOG_SERVICE_URL: http://catalog-service:8997
+      FRONTEND_SERVICE_URL: http://frontend-service:9001
+      ORDER_SERVICE_URLS: http://order-service-1:8998
+    # do not expose any ports—this container just runs the test suite
+    command: bash -c "echo 'Running Catalog Service Tests' && python -m unittest test/test_catalog_service.py > test/output/catalog_tests.log 2>&1 && \
+                      echo 'Running Frontend Service Tests' && python -m unittest test/test_frontend_service.py > test/output/frontend_tests.log 2>&1 && \
+                      echo 'Running Order Service Tests' && python -m unittest test/test_order_service.py > test/output/order_tests.log 2>&1 && \
+                      echo 'Running Integration Tests' && python -m unittest test/integration_test.py > test/output/integration_tests.log 2>&1 && \
+                      echo 'All tests complete. Inspect the .log files under test/ for details.'"]
+    networks:
+      - stock-net
+
+networks:
+  stock-net:
+    driver: bridge
