@@ -1,0 +1,22 @@
+FROM python:3.8-slim
+
+WORKDIR /app
+
+COPY src/frontend_service/frontend_service.py .
+
+COPY . /app
+
+COPY requirements.txt .
+RUN pip install --no-cache-dir --upgrade pip && \
+    pip install --no-cache-dir -r requirements.txt
+
+ENV CATALOG_SERVICE_URL=http://catalog-service:8997
+ENV ORDER_SERVICE_URLS=http://order-service-1:8998,http://order-service-2:8999,http://order-service-3:9000
+ENV FRONTEND_PORT=9001
+ENV CACHE_SIZE=5
+ENV FRONTEND_HOST=0.0.0.0
+ENV CACHE_ENABLED=1
+
+EXPOSE 9001
+
+CMD [ "python", "frontend_service.py" ]
