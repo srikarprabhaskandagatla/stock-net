@@ -1,0 +1,120 @@
+# version: '3.9'
+
+services:
+  # Catalog service
+  catalog-service-paxos:
+    build:
+      context: .
+      dockerfile: CatalogDockerfilePaxos
+    container_name: catalog-service-paxos
+    ports:
+      - "8997:8997"
+    volumes:
+      - ./src_paxos/catalog_service:/app
+    environment:
+      - CATALOG_HOST=0.0.0.0
+      - CATALOG_PORT=8997
+    networks:
+      - paxos-net
+
+  # Order service replica 1
+  order-service-paxos-1:
+    build:
+      context: .
+      dockerfile: OrderDockerfilePaxos
+    container_name: order-service-paxos-1
+    ports:
+      - "8998:8998"
+    volumes:
+      - ./src_paxos/order_service:/app
+    environment:
+      - REPLICA_ID=1
+      - ORDER_PORT=8998
+      - ORDER_LOG_FILE=order_log_1.csv
+      - CATALOG_HOST=catalog-service-paxos
+      - CATALOG_PORT=8997
+    depends_on:
+      - catalog-service-paxos
+    networks:
+      - paxos-net
+
+  # Order service replica 2
+  order-service-paxos-2:
+    build:
+      context: .
+      dockerfile: OrderDockerfilePaxos
+    container_name: order-service-paxos-2
+    ports:
+      - "8999:8999"
+    volumes:
+      - ./src_paxos/order_service:/app
+    environment:
+      - REPLICA_ID=2
+      - ORDER_PORT=8999
+      - ORDER_LOG_FILE=order_log_2.csv
+      - CATALOG_HOST=catalog-service-paxos
+      - CATALOG_PORT=8997
+    depends_on:
+      - catalog-service-paxos
+    networks:
+      - paxos-net
+
+  # Order service replica 3
+  order-service-paxos-3:
+    build:
+      context: .
+      dockerfile: OrderDockerfilePaxos
+    container_name: order-service-paxos-3
+    ports:
+      - "9000:9000"
+    volumes:
+      - ./src_paxos/order_service:/app
+    environment:
+      - REPLICA_ID=3
+      - ORDER_PORT=9000
+      - ORDER_LOG_FILE=order_log_3.csv
+      - CATALOG_HOST=catalog-service-paxos
+      - CATALOG_PORT=8997
+    depends_on:
+      - catalog-service-paxos
+    networks:
+      - paxos-net
+
+  # Frontend service
+  frontend-service-paxos:
+    build:
+      context: .
+      dockerfile: FrontendDockerfilePaxos
+    container_name: frontend-service-paxos
+    ports:
+      - "9001:9001"
+    environment:
+      - CATALOG_SERVICE_URL=http://catalog-service-paxos:8997
+      - ORDER_SERVICE_URLS=http://order-service-paxos-1:8998,http://order-service-paxos-2:8999,http://order-service-paxos-3:9000
+      - FRONTEND_PORT=9001
+    depends_on:
+      - catalog-service-paxos
+      - order-service-paxos-1
+      - order-service-paxos-2
+      - order-service-paxos-3
+    networks:
+      - paxos-net
+
+  # Client service
+  client-service-paxos:
+    build:
+      context: .
+      dockerfile: ClientDockerfilePaxos
+    container_name: client-service-paxos
+    depends_on:
+      - frontend-service-paxos
+    volumes:
+      - ./src_paxos/client:/app
+    environment:
+      - FRONTEND_SERVICE_URL=http://frontend-service-paxos:9001
+    networks:
+      - paxos-net
+
+networks:
+  paxos-net:
+    driver: bridge
