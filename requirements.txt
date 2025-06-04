@@ -1,0 +1,6 @@
+requests>=2.25.1
+matplotlib>=3.3.0
+readerwriterlock>=1.0.0
+flask>=2.2.5
+rwlock>=0.0.1
+cachetools>=5.3.1
