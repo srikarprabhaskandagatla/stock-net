@@ -1,0 +1,21 @@
+FROM python:3.9
+
+RUN apt-get update && apt-get install -y --no-install-recommends \
+    build-essential \
+    gfortran \
+    libatlas-base-dev \
+    libfreetype6-dev \
+    pkg-config \
+ && rm -rf /var/lib/apt/lists/*
+
+WORKDIR /app
+
+COPY requirements.txt .
+RUN pip install --no-cache-dir -r requirements.txt
+
+COPY src_paxos/client/client_load_test.py .
+
+ENV FRONTEND_SERVICE_URL=http://frontend-service-paxos:9001
+ENV CACHE_ENABLED=1
+
+CMD [ "python", "client_load_test.py" ]
