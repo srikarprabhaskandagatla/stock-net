@@ -28,7 +28,7 @@ class IntegrationTest(unittest.TestCase):
 
     def test_lookupNotFound(self):
         stock = "NoSuchStock"
-        logger.info("\nTest 1: Lookup Non-Existent Stock via Frontend (Should Return - 404)")
+        logger.info("\nTest 1: Lookup non-existent stock via Frontend (Should return - 404)")
         r = requests.get(f"{FRONTEND_URL}/stocks/{stock}")
         self.assertEqual(r.status_code, 404)
 
@@ -87,7 +87,7 @@ class IntegrationTest(unittest.TestCase):
 
     def test_invalidTradeType(self):
         stock = "AMD"
-        logger.info("\nTest 4: Invalid Trade type (Should Return - 400) for AMD")
+        logger.info("\nTest 4: Invalid trade type (Should return - 400) for AMD")
         r = requests.post(
             f"{FRONTEND_URL}/orders",
             json={"stock_name": stock, "type": "hold", "quantity": 1}
@@ -97,7 +97,7 @@ class IntegrationTest(unittest.TestCase):
 
     def test_cacheInvalidation(self):
         stock = "AMD"
-        logger.info("\nTest 5: Cache Invalidation after BUY for AMD")
+        logger.info("\nTest 5: Cache invalidation after BUY for AMD")
 
         r1 = requests.get(f"{FRONTEND_URL}/stocks/{stock}")
         self.assertEqual(r1.status_code, 200)
