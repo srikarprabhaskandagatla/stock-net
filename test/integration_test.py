@@ -1,3 +1,4 @@
+# Importing the required libraries
 import os, unittest, time, requests, logging
 
 logging.basicConfig(
@@ -12,7 +13,7 @@ FRONTEND_URL = os.environ.get("FRONTEND_SERVICE_URL", "http://localhost:9001")
 class IntegrationTest(unittest.TestCase):
     @classmethod
     def setUpClass(cls):
-        cls.stocks_to_reset = ["Netflix", "MSFT", "GoogleInc", "AMD"]
+        cls.stocks_to_reset = ["NFLX", "MSFT", "GOOG", "AMD"]
         for stock in cls.stocks_to_reset:
             logger.info(f"Restocking {stock} to high quantity")
             resp = requests.post(
@@ -30,7 +31,7 @@ class IntegrationTest(unittest.TestCase):
         self.assertEqual(r.status_code, 404)
 
     def test_endToEndBuyAndQuery(self):
-        stock = "Netflix"
+        stock = "NFLX"
         logger.info("--------------------Test 2: end-to-end BUY then QUERY for Netflix--------------------")
         r1 = requests.get(f"{FRONTEND_URL}/stocks/{stock}")
         self.assertEqual(r1.status_code, 200)
