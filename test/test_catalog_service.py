@@ -1,7 +1,5 @@
-import unittest
-import json
-import os
-import logging
+# Importing required libraries
+import unittest, json, os, logging
 from src.catalog_service.catalog_service import app, catalogInit, CATALOG_FILE
 
 logging.basicConfig(
@@ -10,6 +8,7 @@ logging.basicConfig(
 )
 logger = logging.getLogger("CatalogServiceTest")
 
+# Catalog Tests
 class CatalogServiceTest(unittest.TestCase):
     def setUp(self):
         if os.path.exists(CATALOG_FILE):
@@ -19,23 +18,23 @@ class CatalogServiceTest(unittest.TestCase):
         self.client = app.test_client()
 
     def test_existingLookup(self):
-        logger.info("Test 1: lookup existing stock (AppleInc) with new GET route")
-        rv = self.client.get('/stocks/AppleInc')
+        logger.info("Test 1: Lookup Existing Stock (APPL) with new GET route")
+        rv = self.client.get('/stocks/APPL')
         self.assertEqual(rv.status_code, 200)
 
         data = rv.get_json()
-        self.assertEqual(data['name'], 'AppleInc')
+        self.assertEqual(data['name'], 'APPL')
         self.assertEqual(data['quantity'], 100)
 
     def test_lookupNotFound(self):
-        logger.info("--------------Test 2: lookup nonexistent stock (NoSuchStock)--------------------")
+        logger.info("\nTest 2: Lookup Non-Existent Stock (NoSuchStock)")
         rv = self.client.get('/stocks/NoSuchStock')
         self.assertEqual(rv.status_code, 404)
         err = rv.get_json()['error']
         self.assertEqual(err['code'], 404)
 
     def test_buyReducesQuality(self):
-        logger.info("-----------------Test 3: buy order reduces quantity (MSFT)-------------------------")
+        logger.info("\nTest 3: BUY Order Reduces Quantity (MSFT)")
         before = self.client.get('/stocks/MSFT').get_json()['quantity']
         rv = self.client.post(
             '/stocks/MSFT',
@@ -47,7 +46,7 @@ class CatalogServiceTest(unittest.TestCase):
         self.assertEqual(after, before - 5)
 
     def test_sellIncreasesQuantity(self):
-        logger.info("------------------Test 4: sell order increases quantity (AMD)-----------------------")
+        logger.info("\nTest 4: Sell Order Increases Quantity (AMD)")
         before = self.client.get('/stocks/AMD').get_json()['quantity']
         rv = self.client.post(
             '/stocks/AMD',
@@ -59,7 +58,7 @@ class CatalogServiceTest(unittest.TestCase):
         self.assertEqual(after, before + 10)
 
     def test_invalidTradeType(self):
-        logger.info("----------------------Test 5: invalid trade type (hold)-------------------------------")
+        logger.info("\nTest 5: Invalid Trade type (hold)")
         rv = self.client.post(
             '/stocks/MSFT',
             data=json.dumps({"type": "hold", "quantity": 5}),
@@ -70,24 +69,24 @@ class CatalogServiceTest(unittest.TestCase):
         self.assertEqual(err['code'], 400)
 
     def test_missingRequestData(self):
-        logger.info("-----------------------Test 6: missing request data---------------------------")
+        logger.info("\nTest 6: Missing Request Data")
         rv1 = self.client.post(
-            '/stocks/AppleInc',
+            '/stocks/APPL',
             data=json.dumps({"quantity": 5}),
             content_type='application/json'
         )
         self.assertEqual(rv1.status_code, 400)
         rv2 = self.client.post(
-            '/stocks/AppleInc',
+            '/stocks/APPL',
             data=json.dumps({"type": "buy"}),
             content_type='application/json'
         )
         self.assertEqual(rv2.status_code, 400)
 
     def test_update_nonexistent_stock(self):
-        logger.info("--------------------Test 7: update on nonexistent stock (UnknownStock)------------------------")
+        logger.info("\nTest 7: Update on Non-Existent Stock (NoSuchStock)")
         rv = self.client.post(
-            '/stocks/UnknownStock',
+            '/stocks/NoSuchStock',
             data=json.dumps({"type": "buy", "quantity": 1}),
             content_type='application/json'
         )
