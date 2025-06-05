@@ -7,9 +7,11 @@ logging.basicConfig(
 )
 logger = logging.getLogger("IntegrationTest")
 
-CATALOG_URL = os.environ.get("CATALOG_SERVICE_URL", "http://localhost:8997")
-FRONTEND_URL = os.environ.get("FRONTEND_SERVICE_URL", "http://localhost:9001")
+# Environment variables for service URLs
+CATALOG_URL = os.environ.get("CATALOG_SERVICE_URL", "http://catalog-service:8997")
+FRONTEND_URL = os.environ.get("FRONTEND_SERVICE_URL", "http://frontend-service:9001")
 
+# All Test Cases
 class IntegrationTest(unittest.TestCase):
     @classmethod
     def setUpClass(cls):
@@ -26,13 +28,13 @@ class IntegrationTest(unittest.TestCase):
 
     def test_lookupNotFound(self):
         stock = "NoSuchStock"
-        logger.info("--------------------Test 1: lookup nonexistent stock via frontend should return 404--------------------")
+        logger.info("\nTest 1: Lookup Non-Existent Stock via Frontend (Should Return - 404)")
         r = requests.get(f"{FRONTEND_URL}/stocks/{stock}")
         self.assertEqual(r.status_code, 404)
 
     def test_endToEndBuyAndQuery(self):
         stock = "NFLX"
-        logger.info("--------------------Test 2: end-to-end BUY then QUERY for Netflix--------------------")
+        logger.info("\nTest 2: End-to-end BUY then QUERY for Netflix (NFLX)")
         r1 = requests.get(f"{FRONTEND_URL}/stocks/{stock}")
         self.assertEqual(r1.status_code, 200)
         qty_before = r1.json()['data']['quantity']
@@ -58,7 +60,7 @@ class IntegrationTest(unittest.TestCase):
 
     def test_endToEndSellAndQuery(self):
         stock = "MSFT"
-        logger.info("--------------------Test 3: end-to-end SELL then QUERY for MSFT--------------------")
+        logger.info("\nTest 3: End-to-end SELL then QUERY for Microsoft (MSFT)")
 
         r1 = requests.get(f"{FRONTEND_URL}/stocks/{stock}")
         self.assertEqual(r1.status_code, 200)
@@ -85,7 +87,7 @@ class IntegrationTest(unittest.TestCase):
 
     def test_invalidTradeType(self):
         stock = "AMD"
-        logger.info("--------------------Test 4: invalid trade type should return 400 for AMD--------------------")
+        logger.info("\nTest 4: Invalid Trade type (Should Return - 400) for AMD")
         r = requests.post(
             f"{FRONTEND_URL}/orders",
             json={"stock_name": stock, "type": "hold", "quantity": 1}
@@ -95,7 +97,7 @@ class IntegrationTest(unittest.TestCase):
 
     def test_cacheInvalidation(self):
         stock = "AMD"
-        logger.info("--------------------Test 5: cache invalidation after buy for AMD--------------------")
+        logger.info("\nTest 5: Cache Invalidation after BUY for AMD")
 
         r1 = requests.get(f"{FRONTEND_URL}/stocks/{stock}")
         self.assertEqual(r1.status_code, 200)
