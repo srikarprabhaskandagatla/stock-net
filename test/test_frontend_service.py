@@ -21,7 +21,7 @@ class FrontendServiceTest(unittest.TestCase):
         self.client = app.test_client()
 
     def test_lookupThroughCatalog(self):
-        logger.info("\nTest 1: 'GET /stocks/<name>' Should Return data from Catalog")
+        logger.info("\nTest 1: 'GET /stocks/<name>' should return data from Catalog")
         rv = self.client.get('/stocks/APPL')
         self.assertEqual(rv.status_code, 200)
         payload = rv.get_json()
@@ -41,7 +41,7 @@ class FrontendServiceTest(unittest.TestCase):
         self.assertEqual(data1, data2)
 
     def test_invalidate(self):
-        logger.info("\nTest 3: 'POST /invalidate/<name>' Should clear Cache Entry")
+        logger.info("\nTest 3: 'POST /invalidate/<name>' should clear Cache Entry")
         self.client.get('/stocks/AMD')
         rv = self.client.post('/invalidate/AMD')
         self.assertEqual(rv.status_code, 200)
