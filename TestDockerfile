@@ -1,0 +1,24 @@
+FROM python:3.9-slim
+WORKDIR /app
+
+COPY requirements.txt ./
+RUN pip install --no-cache-dir --upgrade pip && \
+    pip install --no-cache-dir -r requirements.txt
+
+COPY src    ./src
+COPY test   ./test
+
+ENV CATALOG_SERVICE_URL=http://catalog-service:8997 \
+    FRONTEND_SERVICE_URL=http://frontend-service:9001 \
+    ORDER_SERVICE_URLS=http://order-service-1:8998
+
+CMD bash -c "\
+  echo 'Running Catalog Service Tests' && \
+  python -m unittest test/test_catalog_service.py > test/output/catalog_tests.log 2>&1 && \
+  echo 'Running Frontend Service Tests' && \
+  python -m unittest test/test_frontend_service.py > test/output/frontend_tests.log 2>&1 && \
+  echo 'Running Order Service Tests' && \
+  python -m unittest test/test_order_service.py > test/output/order_tests.log 2>&1 && \
+  echo 'Running Integration Tests' && \
+  python -m unittest test/integration_test.py > test/output/integration_tests.log 2>&1 && \
+  echo 'All tests complete. Inspect the .log files under test/ for details.'"
