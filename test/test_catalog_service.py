@@ -18,7 +18,7 @@ class CatalogServiceTest(unittest.TestCase):
         self.client = app.test_client()
 
     def test_existingLookup(self):
-        logger.info("Test 1: Lookup Existing Stock (APPL) with new GET route")
+        logger.info("\nTest 1: Lookup Existing Stock (APPL) with new GET route")
         rv = self.client.get('/stocks/APPL')
         self.assertEqual(rv.status_code, 200)
 
