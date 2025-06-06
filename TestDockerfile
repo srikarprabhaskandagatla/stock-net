@@ -21,4 +21,4 @@ CMD bash -c "\
   python -m unittest test/test_order_service.py > test/output/order_tests.log 2>&1 && \
   echo 'Running Integration Tests' && \
   python -m unittest test/integration_test.py > test/output/integration_tests.log 2>&1 && \
-  echo 'All tests complete. Inspect the .log files under test/ for details.'"
+  echo 'All tests complete. Inspect the .log files under test/output/ for details.'"
