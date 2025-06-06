@@ -1,0 +1,26 @@
+2025-06-06 15:17:35,058 [INFO] IntegrationTest: Restocking NFLX to high quantity
+2025-06-06 15:17:35,073 [INFO] IntegrationTest: Restocking MSFT to high quantity
+2025-06-06 15:17:35,085 [INFO] IntegrationTest: Restocking GOOG to high quantity
+2025-06-06 15:17:35,099 [INFO] IntegrationTest: Restocking AMD to high quantity
+2025-06-06 15:17:35,111 [INFO] IntegrationTest: -----Test 1: Lookup non-existent stock via Frontend (Should return - 404)-----
+.2025-06-06 15:17:35,116 [INFO] IntegrationTest: -----Test 2: End-to-end BUY then QUERY for Netflix (NFLX)-----
+2025-06-06 15:17:35,121 [INFO] IntegrationTest: Quantity before buy: 1020
+2025-06-06 15:17:35,151 [INFO] IntegrationTest: Received transaction number: 457
+2025-06-06 15:17:35,675 [INFO] IntegrationTest: Order query returned correct type 'buy'
+2025-06-06 15:17:35,681 [INFO] IntegrationTest: Quantity after buy: 1019
+.2025-06-06 15:17:35,683 [INFO] IntegrationTest: -----Test 3: End-to-end SELL then QUERY for Microsoft (MSFT)-----
+2025-06-06 15:17:35,687 [INFO] IntegrationTest: Quantity before sell: 1163
+2025-06-06 15:17:35,721 [INFO] IntegrationTest: Sell transaction number: 458
+2025-06-06 15:17:36,249 [INFO] IntegrationTest: Order query returned correct type 'sell'
+2025-06-06 15:17:36,257 [INFO] IntegrationTest: Quantity after sell: 1165
+.2025-06-06 15:17:36,258 [INFO] IntegrationTest: -----Test 4: Invalid trade type (Should return - 400) for AMD-----
+2025-06-06 15:17:36,267 [INFO] IntegrationTest: Received 400 for invalid trade type as expected
+.2025-06-06 15:17:36,267 [INFO] IntegrationTest: -----Test 5: Cache invalidation after BUY for AMD-----
+2025-06-06 15:17:36,273 [INFO] IntegrationTest: Quantity before buy: 1077
+2025-06-06 15:17:36,315 [INFO] IntegrationTest: Placed buy order, txn 459
+2025-06-06 15:17:36,822 [INFO] IntegrationTest: Quantity after buy and cache invalidation: 1074
+.
+----------------------------------------------------------------------
+Ran 5 tests in 1.766s
+
+OK
