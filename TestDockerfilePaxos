@@ -1,0 +1,24 @@
+FROM python:3.9-slim
+WORKDIR /app
+
+COPY requirements.txt ./
+RUN pip install --no-cache-dir --upgrade pip && \
+    pip install --no-cache-dir -r requirements.txt
+
+COPY src    ./src_paxos
+COPY test   ./test_paxos
+
+ENV CATALOG_SERVICE_URL=http://catalog-service-paxos:8997 \
+    FRONTEND_SERVICE_URL=http://frontend-service-paxos:9001 \
+    ORDER_SERVICE_URLS=http://order-service-paxos-1:8998
+
+CMD bash -c "\
+  echo 'Running Catalog Service Tests' && \
+  python -m unittest test_paxos/test_catalog_service_paxos.py > test_paxos/output/catalog_tests_paxos.log 2>&1 && \
+  echo 'Running Frontend Service Tests' && \
+  python -m unittest test_paxos/test_frontend_service_paxos.py > test_paxos/output/frontend_tests_paxos.log 2>&1 && \
+  echo 'Running Order Service Tests' && \
+  python -m unittest test_paxos/test_order_service_paxos.py > test_paxos/output/order_tests_paxos.log 2>&1 && \
+  echo 'Running Integration Tests' && \
+  python -m unittest test_paxos/integration_test_paxos.py > test_paxos/output/integration_tests_paxos.log 2>&1 && \
+  echo 'All tests complete. Inspect the .log files under test_paxos/output/ for details.'"
