@@ -20,7 +20,7 @@ class FrontendServiceTest(unittest.TestCase):
         cache.access_order.clear()
         self.client = app.test_client()
 
-    def test_lookupThroughCatalog(self):
+    def test_01_lookupThroughCatalog(self):
         logger.info("\n-----Test 1: 'GET /stocks/<name>' should return data from Catalog-----")
         rv = self.client.get('/stocks/APPL')
         self.assertEqual(rv.status_code, 200)
@@ -28,7 +28,7 @@ class FrontendServiceTest(unittest.TestCase):
         self.assertEqual(payload['message'], 'Lookup successful')
         self.assertIn('data', payload)
 
-    def test_cacheMissAndHit(self):
+    def test_02_cacheMissAndHit(self):
         logger.info("\n-----Test 2: Cache Miss then Cache hit for same key-----")
         # First request should be a miss and populate cache
         rv1 = self.client.get('/stocks/TSLA')
@@ -40,7 +40,7 @@ class FrontendServiceTest(unittest.TestCase):
         data2 = rv2.get_json()['data']
         self.assertEqual(data1, data2)
 
-    def test_invalidate(self):
+    def test_03_invalidate(self):
         logger.info("\n-----Test 3: 'POST /invalidate/<name>' should clear Cache Entry-----")
         self.client.get('/stocks/AMD')
         rv = self.client.post('/invalidate/AMD')
@@ -50,7 +50,7 @@ class FrontendServiceTest(unittest.TestCase):
         self.assertEqual(rv2.status_code, 200)
 
     @patch('src.frontend_service.frontend_service.requests.get')
-    def test_lookupCatalogError(self, mock_get):
+    def test_04_lookupCatalogError(self, mock_get):
         logger.info("\n-----Test 4: 'GET /stocks/<name>' when catalog-service request fails-----")
         mock_get.side_effect = requests.RequestException("Connection failed")
         rv = self.client.get('/stocks/NoSuchStock')
@@ -58,7 +58,7 @@ class FrontendServiceTest(unittest.TestCase):
         self.assertIn('error', rv.get_json())
 
     @patch('src.frontend_service.frontend_service.orderHandler')
-    def test_order(self, mock_handle):
+    def test_05_order(self, mock_handle):
         logger.info("\n-----Test 5: 'POST /orders' success scenario-----")
         mock_handle.return_value = ({"data": {"transaction_number": 99}}, 200)
         rv = self.client.post(
@@ -70,7 +70,7 @@ class FrontendServiceTest(unittest.TestCase):
         self.assertEqual(data['transaction_number'], 99)
 
     @patch('src.frontend_service.frontend_service.orderHandler')
-    def test_order_route_failure(self, mock_handle):
+    def test_06_order_route_failure(self, mock_handle):
         logger.info("\n-----Test 6: 'POST /orders' failure scenario-----")
         mock_handle.return_value = ({"error": {"code": 503, "message": "Leader down"}}, 503)
         rv = self.client.post(
@@ -82,7 +82,7 @@ class FrontendServiceTest(unittest.TestCase):
         self.assertEqual(err['code'], 503)
 
     @patch('src.frontend_service.frontend_service.queryOrderHandler')
-    def test_get_order_success(self, mock_query):
+    def test_07_get_order_success(self, mock_query):
         logger.info("\n-----Test 7: 'GET /orders/<id>' success scenario-----")
         mock_query.return_value = (
             {"data": {"transaction_number": 7, "stock_name": "MSFT", "type": "sell", "quantity": 2}}, 
@@ -97,7 +97,7 @@ class FrontendServiceTest(unittest.TestCase):
         self.assertEqual(d['quantity'], 2)
 
     @patch('src.frontend_service.frontend_service.queryOrderHandler')
-    def test_get_order_failure(self, mock_query):
+    def test_08_get_order_failure(self, mock_query):
         logger.info("\n-----Test 8: 'GET /orders/<id>' failure scenario-----")
         mock_query.return_value = ({"error": {"code": 404, "message": "Not found"}}, 404)
         rv = self.client.get('/orders/123')
