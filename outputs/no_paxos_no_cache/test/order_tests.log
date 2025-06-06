@@ -1,0 +1,45 @@
+2025-06-06 15:25:05,077 INFO -----Test 1: Health ping returns healthy status-----
+.2025-06-06 15:25:05,079 INFO -----Test 2: Set leader and verify via ping-----
+2025-06-06 15:25:05,080 INFO Replica 1: Received leader notification. New leader: http://order-service-1:8998
+2025-06-06 15:25:05,080 INFO Replica 1: Set as leader.
+2025-06-06 15:25:05,081 INFO Replica 1: Leader recovery process started.
+2025-06-06 15:25:05,081 INFO Replica 1: Starting state recovery as new leader.
+2025-06-06 15:25:05,082 INFO Replica 1: Own max transaction number (from memory) is -1.
+2025-06-06 15:25:05,082 INFO Replica 1: Querying max transaction from http://order-service-2:8999...
+2025-06-06 15:25:05,085 INFO Replica 1: Received max_transaction 436 from http://order-service-2:8999
+2025-06-06 15:25:05,086 INFO Replica 1: Querying max transaction from http://order-service-3:9000...
+2025-06-06 15:25:05,088 INFO Replica 1: Received max_transaction 436 from http://order-service-3:9000
+2025-06-06 15:25:05,091 INFO Replica 1: Global max seen: 436. Original local counter: 437. Updated transaction_number counter to: 437
+2025-06-06 15:25:05,093 WARNING Replica 1: Failed to get missing orders from http://order-service-2:8999, status: 404, Response: <!doctype html>
+<html lang=en>
+<title>404 Not Found</title>
+<h1>Not Found</h1>
+<p>The requested URL was not found on the server. If you entered the URL manually please check your spelling and try agai
+2025-06-06 15:25:05,095 WARNING Replica 1: Failed to get missing orders from http://order-service-3:9000, status: 404, Response: <!doctype html>
+<html lang=en>
+<title>404 Not Found</title>
+<h1>Not Found</h1>
+<p>The requested URL was not found on the server. If you entered the URL manually please check your spelling and try agai
+2025-06-06 15:25:05,096 INFO Replica 1: Finished applying fetched orders. Added 0 new orders.
+2025-06-06 15:25:05,096 INFO Replica 1: State recovery finished.
+2025-06-06 15:25:05,096 INFO Replica 1: Leader recovery process completed successfully.
+.2025-06-06 15:25:05,097 INFO -----Test 3: Calling 'set_leader' without payload returns 400-----
+.2025-06-06 15:25:05,098 INFO -----Test 4: 'max_transaction' initially -1-----
+.2025-06-06 15:25:05,099 INFO -----Test 5: 'get_missing_orders' returns empty list when none-----
+2025-06-06 15:25:05,100 INFO Replica 1: Received request for orders after 0.
+2025-06-06 15:25:05,100 INFO Replica 1: Found 0 orders after 0.
+.2025-06-06 15:25:05,101 INFO -----Test 6: 'get_order' returns 404 if order not found-----
+2025-06-06 15:25:05,101 ERROR Replica 1: Order log file not found.
+.2025-06-06 15:25:05,101 INFO -----Test 7: 'replicate_order' returns 409 when self is leader-----
+2025-06-06 15:25:05,102 WARNING Replica 1: Received replicate_order for leader. Sending 409 error.
+.2025-06-06 15:25:05,102 INFO -----Test 8: 'replicate_order' returns 400 for invalid data-----
+2025-06-06 15:25:05,102 INFO Replica 1 (Follower): Received invalid replication request data: {'transaction_number': 'zero'}
+.2025-06-06 15:25:05,103 INFO -----Test 9: Successful 'replicate_order' followed by get_order-----
+2025-06-06 15:25:05,103 INFO Replica 1 (Follower): Received replication request for order 5.
+2025-06-06 15:25:05,104 INFO Replica 1: Wrote header to new/empty log file order_log_1.csv
+2025-06-06 15:25:05,104 INFO Replica 1 (Follower): Successfully replicated order 5.
+.
+----------------------------------------------------------------------
+Ran 9 tests in 0.030s
+
+OK
