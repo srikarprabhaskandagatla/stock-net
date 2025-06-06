@@ -28,13 +28,13 @@ class IntegrationTest(unittest.TestCase):
 
     def test_01_lookupNotFound(self):
         stock = "NoSuchStock"
-        logger.info("\n-----Test 1: Lookup non-existent stock via Frontend (Should return - 404)-----")
+        logger.info("-----Test 1: Lookup non-existent stock via Frontend (Should return - 404)-----")
         r = requests.get(f"{FRONTEND_URL}/stocks/{stock}")
         self.assertEqual(r.status_code, 404)
 
     def test_02_endToEndBuyAndQuery(self):
         stock = "NFLX"
-        logger.info("\n-----Test 2: End-to-end BUY then QUERY for Netflix (NFLX)-----")
+        logger.info("-----Test 2: End-to-end BUY then QUERY for Netflix (NFLX)-----")
         r1 = requests.get(f"{FRONTEND_URL}/stocks/{stock}")
         self.assertEqual(r1.status_code, 200)
         qty_before = r1.json()['data']['quantity']
@@ -60,7 +60,7 @@ class IntegrationTest(unittest.TestCase):
 
     def test_03_endToEndSellAndQuery(self):
         stock = "MSFT"
-        logger.info("\n-----Test 3: End-to-end SELL then QUERY for Microsoft (MSFT)-----")
+        logger.info("-----Test 3: End-to-end SELL then QUERY for Microsoft (MSFT)-----")
 
         r1 = requests.get(f"{FRONTEND_URL}/stocks/{stock}")
         self.assertEqual(r1.status_code, 200)
@@ -87,7 +87,7 @@ class IntegrationTest(unittest.TestCase):
 
     def test_04_invalidTradeType(self):
         stock = "AMD"
-        logger.info("\n-----Test 4: Invalid trade type (Should return - 400) for AMD-----")
+        logger.info("-----Test 4: Invalid trade type (Should return - 400) for AMD-----")
         r = requests.post(
             f"{FRONTEND_URL}/orders",
             json={"stock_name": stock, "type": "hold", "quantity": 1}
@@ -97,7 +97,7 @@ class IntegrationTest(unittest.TestCase):
 
     def test_05_cacheInvalidation(self):
         stock = "AMD"
-        logger.info("\n-----Test 5: Cache invalidation after BUY for AMD-----")
+        logger.info("-----Test 5: Cache invalidation after BUY for AMD-----")
 
         r1 = requests.get(f"{FRONTEND_URL}/stocks/{stock}")
         self.assertEqual(r1.status_code, 200)
