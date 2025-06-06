@@ -26,13 +26,13 @@ class IntegrationTest(unittest.TestCase):
             if resp.status_code not in (200, 404):
                 logger.warning(f"Unexpected status when restocking {stock}: {resp.status_code}")
 
-    def test_lookupNotFound(self):
+    def test_01_lookupNotFound(self):
         stock = "NoSuchStock"
         logger.info("\n-----Test 1: Lookup non-existent stock via Frontend (Should return - 404)-----")
         r = requests.get(f"{FRONTEND_URL}/stocks/{stock}")
         self.assertEqual(r.status_code, 404)
 
-    def test_endToEndBuyAndQuery(self):
+    def test_02_endToEndBuyAndQuery(self):
         stock = "NFLX"
         logger.info("\n-----Test 2: End-to-end BUY then QUERY for Netflix (NFLX)-----")
         r1 = requests.get(f"{FRONTEND_URL}/stocks/{stock}")
@@ -58,7 +58,7 @@ class IntegrationTest(unittest.TestCase):
         self.assertEqual(qty_after, qty_before - 1)
         logger.info(f"Quantity after buy: {qty_after}")
 
-    def test_endToEndSellAndQuery(self):
+    def test_03_endToEndSellAndQuery(self):
         stock = "MSFT"
         logger.info("\n-----Test 3: End-to-end SELL then QUERY for Microsoft (MSFT)-----")
 
@@ -85,7 +85,7 @@ class IntegrationTest(unittest.TestCase):
         self.assertEqual(qty_after, qty_before + 2)
         logger.info(f"Quantity after sell: {qty_after}")
 
-    def test_invalidTradeType(self):
+    def test_04_invalidTradeType(self):
         stock = "AMD"
         logger.info("\n-----Test 4: Invalid trade type (Should return - 400) for AMD-----")
         r = requests.post(
@@ -95,7 +95,7 @@ class IntegrationTest(unittest.TestCase):
         self.assertEqual(r.status_code, 400)
         logger.info("Received 400 for invalid trade type as expected")
 
-    def test_cacheInvalidation(self):
+    def test_05_cacheInvalidation(self):
         stock = "AMD"
         logger.info("\n-----Test 5: Cache invalidation after BUY for AMD-----")
 
