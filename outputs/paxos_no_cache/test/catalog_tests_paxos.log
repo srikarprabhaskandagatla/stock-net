@@ -1,0 +1,34 @@
+2025-06-06 21:59:28,317 WARNING Catalog file not found. Initializing with default catalog.
+2025-06-06 21:59:28,321 INFO -----Test 1: Lookup existing stock (APPL) with new GET route-----
+2025-06-06 21:59:28,323 INFO Looking for stock: APPL
+.2025-06-06 21:59:28,324 INFO setUp: Removing existing catalog file (if any) and initializing catalog
+2025-06-06 21:59:28,325 WARNING Catalog file not found. Initializing with default catalog.
+2025-06-06 21:59:28,326 INFO -----Test 2: Lookup non-existent stock (NoSuchStock)-----
+.2025-06-06 21:59:28,330 INFO setUp: Removing existing catalog file (if any) and initializing catalog
+2025-06-06 21:59:28,331 WARNING Catalog file not found. Initializing with default catalog.
+2025-06-06 21:59:28,331 INFO -----Test 3: BUY Order reduces quantity (MSFT)-----
+2025-06-06 21:59:28,332 INFO Looking for stock: MSFT
+2025-06-06 21:59:28,333 INFO Updated the catalog for stock: MSFT
+2025-06-06 21:59:28,340 INFO Failed to invalidate cache for stock: MSFT
+2025-06-06 21:59:28,341 INFO Looking for stock: MSFT
+.2025-06-06 21:59:28,343 INFO setUp: Removing existing catalog file (if any) and initializing catalog
+2025-06-06 21:59:28,343 WARNING Catalog file not found. Initializing with default catalog.
+2025-06-06 21:59:28,344 INFO -----Test 4: SELL Order increases quantity (AMD)-----
+2025-06-06 21:59:28,345 INFO Looking for stock: AMD
+2025-06-06 21:59:28,346 INFO Updated the catalog for stock: AMD
+2025-06-06 21:59:28,349 INFO Failed to invalidate cache for stock: AMD
+2025-06-06 21:59:28,350 INFO Looking for stock: AMD
+.2025-06-06 21:59:28,350 INFO setUp: Removing existing catalog file (if any) and initializing catalog
+2025-06-06 21:59:28,351 WARNING Catalog file not found. Initializing with default catalog.
+2025-06-06 21:59:28,351 INFO -----Test 5: Invalid trade type (hold)-----
+.2025-06-06 21:59:28,352 INFO setUp: Removing existing catalog file (if any) and initializing catalog
+2025-06-06 21:59:28,352 WARNING Catalog file not found. Initializing with default catalog.
+2025-06-06 21:59:28,352 INFO -----Test 6: Missing request data-----
+.2025-06-06 21:59:28,353 INFO setUp: Removing existing catalog file (if any) and initializing catalog
+2025-06-06 21:59:28,353 WARNING Catalog file not found. Initializing with default catalog.
+2025-06-06 21:59:28,355 INFO -----Test 7: Update on non-existent stock (NoSuchStock)-----
+.
+----------------------------------------------------------------------
+Ran 7 tests in 0.039s
+
+OK
