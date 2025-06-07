@@ -170,8 +170,12 @@ def healthCheck():
 @app.route("/set_leader", methods=["POST"])
 def setLeader():
     global LEADER_ID, leaderRecoveryCompleted
+    data = request.get_json()
+    leader_id = data.get("leader_id") if data else None
+    if not leader_id:
+        return jsonify(error={"code": 400, "message": "Missing leader_id"}), 400
     prevLeader = LEADER_ID
-    LEADER_ID = request.json.get("leader_id")
+    LEADER_ID = leader_id
     logger.info(f"Leader changed from {prevLeader} ➔ {LEADER_ID}")
     leaderRecoveryCompleted = False
     if LEADER_ID == SELF_URL and prevLeader != SELF_URL:
@@ -256,6 +260,8 @@ def replicateOrder():
     if not all(k in replicatedOrder for k in ["transaction_number", "stock_name", "type", "quantity"]):
         logger.warning(f"Replica {REPLICA_ID}: Invalid replicated order data: {replicatedOrder}")
         return jsonify(error={"code": 400, "message": "Invalid replicated order data"}), 400
+    if LEADER_ID == SELF_URL:
+        return jsonify(error={"code": 409, "message": "Cannot replicate order to self (leader)"}), 409
     if isinstance(transactionNum,int) and loadOrderToMemory(replicatedOrder):
         loadOrderToDisk(replicatedOrder)
     return jsonify(message="Replicated")
