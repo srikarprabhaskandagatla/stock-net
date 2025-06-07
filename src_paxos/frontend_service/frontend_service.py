@@ -127,7 +127,7 @@ def orderHandler(order_data, max_retries=3):
     logger.error(f"Leader unreachable after {max_retries} retries. Order could not be processed.")
     return {"error": {"code": 503, "message": f"Leader unavailable after {max_retries} retries"}}, 503
 
-def orderQueryHandler(order_number, max_retries=3): # Helper function to Query the successful orders
+def queryOrderHandler(order_number, max_retries=3): # Helper function to Query the successful orders
     global LEADER_URL
     if not LEADER_URL:
         findLeader()
@@ -199,7 +199,7 @@ def order():
 
 @app.route('/orders/<int:order_number>', methods=['GET'])
 def get_order(order_number):
-    response, status_code = orderQueryHandler(order_number)
+    response, status_code = queryOrderHandler(order_number)
     if status_code == 200:
         data = response.get("data", {})
         return {
