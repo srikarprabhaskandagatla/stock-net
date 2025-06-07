@@ -1,0 +1,19 @@
+2025-06-06 21:36:33,322 INFO -----Test 1: Health ping returns healthy status-----
+.2025-06-06 21:36:33,327 INFO -----Test 2: Set leader and verify via ping-----
+2025-06-06 21:36:33,331 INFO Leader changed from None ➔ http://order-service-paxos-1:8999
+.2025-06-06 21:36:33,339 INFO -----Test 3: Calling 'set_leader' without payload returns 400-----
+.2025-06-06 21:36:33,340 INFO -----Test 4: 'max_transaction' initially -1-----
+.2025-06-06 21:36:33,349 INFO Background recovery complete. Next transaction=468
+2025-06-06 21:36:33,355 INFO -----Test 5: 'get_missing_orders' returns empty list when none-----
+.2025-06-06 21:36:33,360 INFO -----Test 6: 'get_order' returns 404 if order not found-----
+.2025-06-06 21:36:33,361 INFO -----Test 7: 'replicate_order' returns 409 when self is leader-----
+.2025-06-06 21:36:33,362 INFO -----Test 8: 'replicate_order' returns 400 for invalid data-----
+2025-06-06 21:36:33,363 WARNING Replica 1: Invalid replicated order data: {'transaction_number': 'zero'}
+.2025-06-06 21:36:33,364 INFO -----Test 9: Successful 'replicate_order' followed by get_order-----
+.2025-06-06 21:36:33,365 INFO -----Test 10: Paxos prepare and accept flow-----
+2025-06-06 21:36:33,366 INFO ['/static/<path:filename>', '/paxos/prepare', '/paxos/accept', '/ping', '/set_leader', '/orders', '/replicate_order', '/orders/<int:transactionNum>', '/get_missing_orders/<int:lastTransactionNum>', '/max_transaction']
+.
+----------------------------------------------------------------------
+Ran 10 tests in 0.047s
+
+OK
