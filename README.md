@@ -1,6 +1,6 @@
 <h1 align="center">
   <br>
-    TStock Net: 3 Tier Stock Trading System
+    Stock Net: 2 Tier Stock Trading System
   <br>
 </h1>
 
@@ -15,3 +15,55 @@
     <img src="https://img.shields.io/badge/-Docker-2496ED?style=flat-square&logo=docker&logoColor=white" alt="Docker">
   </a>
 </p>
+
+<p align="center">
+  <a href="#what-is-stock-net?">Whhat is Stock Net?</a>
+  •
+  <a href="#how-does-it-work">How does it work?</a>
+  •
+  <a href="#execution-steps">Execution Steps</a>
+  •
+  <a href="#run-the-code-on-cloud">Run the Code on Cloud</a>
+  •
+  <a href="#contribution">Contribution</a>
+</p>
+
+# What is Stock Net?
+This is a 2-Tier Toy Stock Trading System, designed with two distinct layers: a front-end tier and a back-end tier. Each tier is implemented using microservices. The front-end consists of a single microservice that handles all client interactions. The back-end is divided into two separate microservices: one for the stock catalog and another for processing stock orders. Clients connect to the front-end service to perform buy/sell operations, making this a distributed application.
+
+# Execution Steps
+### Start the Docker Container
+
+To start a Docker container, run the following script under root folder:
+
+For changes without paxos:
+```bash
+$ ./bash.sh
+```
+
+For changes with paxos:
+```bash
+$ ./bash.sh paxos
+```
+
+This command will bring up all the micro-services images(client, frontend, order, catalog) up in the docker in the order:
+Catalog Service -> Order Service -> Frontend Service -> Client Service -> Test Service
+
+Catalog Service will generate **catalog_service.csv** under catalog-service folder, which holds the catalog data.
+Order Service will generate **order_service.py** under order-service folder, which has all the transactions made.
+Client Service will generate **load_test.png** graph under client folder, which plots lookup, order query and trade latency.
+Test Service will generate unit and integration test log results under test/output folder, holding the output of the tests.
+
+### Stop the Docker Container
+
+To stop a Docker containers, run the following script under root folder:
+
+For changes without paxos:
+```bash
+$ docker-compose down
+```
+
+For changes with paxos:
+```bash
+$ docker-compose -f docker-compose.paxos.yml down
+```
