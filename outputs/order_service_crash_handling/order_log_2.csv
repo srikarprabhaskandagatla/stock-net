@@ -276,6 +276,3 @@ transaction_number,stock_name,type,quantity
 274,AMZN,buy,5
 275,TSLA,buy,9
 276,GOOG,sell,7
-463,NFLX,buy,1
-464,MSFT,sell,2
-465,AMD,buy,3

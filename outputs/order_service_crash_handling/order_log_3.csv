@@ -61,6 +61,3 @@ transaction_number,stock_name,type,quantity
 59,APPL,buy,7
 60,IBM,sell,10
 61,AMD,sell,16
-463,NFLX,buy,1
-464,MSFT,sell,2
-465,AMD,buy,3
