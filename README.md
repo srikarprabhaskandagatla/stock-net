@@ -67,3 +67,8 @@ For changes with paxos:
 ```bash
 $ docker-compose -f docker-compose.paxos.yml down
 ```
+
+# Contribution
+If you have any feedback, suggestions, or find a bug, feel free to open an issue or submit a pull request — your contributions are always welcome!
+
+This project is licensed under the MIT License. For more details, see the [LICENSE](LICENSE) file.
