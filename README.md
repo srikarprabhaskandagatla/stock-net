@@ -31,6 +31,9 @@
 # What is Stock Net?
 This is a 2-Tier Toy Stock Trading System, designed with two distinct layers: a front-end tier and a back-end tier. Each tier is implemented using microservices. The front-end consists of a single microservice that handles all client interactions. The back-end is divided into two separate microservices: one for the stock catalog and another for processing stock orders. Clients connect to the front-end service to perform buy/sell operations, making this a distributed application.
 
+# How does it work?
+The system consists of a Front-end service, a Catalog service, and an Order service.
+
 # Execution Steps
 ### Start the Docker Container
 
@@ -38,12 +41,12 @@ To start a Docker container, run the following script under root folder:
 
 For changes without paxos:
 ```bash
-$ ./bash.sh
+./bash.sh
 ```
 
 For changes with paxos:
 ```bash
-$ ./bash.sh paxos
+./bash.sh paxos
 ```
 
 This command will bring up all the micro-services images(client, frontend, order, catalog) up in the docker in the order:
@@ -60,13 +63,16 @@ To stop a Docker containers, run the following script under root folder:
 
 For changes without paxos:
 ```bash
-$ docker-compose down
+docker-compose down
 ```
 
 For changes with paxos:
 ```bash
-$ docker-compose -f docker-compose.paxos.yml down
+docker-compose -f docker-compose.paxos.yml down
 ```
+
+# Run the Code on Cloud
+The code is hosted on AWS.
 
 # Contribution
 If you have any feedback, suggestions, or find a bug, feel free to open an issue or submit a pull request — your contributions are always welcome!
