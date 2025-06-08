@@ -1,0 +1,1 @@
+Run the code as given in the `README.md`, the test outputs are generated in this `test_paxos/output` folder.
