@@ -1,0 +1,41 @@
+2025-06-08 22:41:29,161 INFO Initialized cache with size: 5
+2025-06-08 22:41:29,170 INFO setUp: Clearing cache and resetting test client
+2025-06-08 22:41:29,175 INFO -----Test 1: 'GET /stocks/<name>' should return data from Catalog-----
+2025-06-08 22:41:29,180 INFO Cache enabled lookup
+2025-06-08 22:41:29,181 INFO Cache miss for key: APPL
+2025-06-08 22:41:29,185 INFO Cache miss: APPL. Adding to cache.
+.2025-06-08 22:41:29,186 INFO setUp: Clearing cache and resetting test client
+2025-06-08 22:41:29,186 INFO -----Test 2: Cache Miss then Cache hit for same key-----
+2025-06-08 22:41:29,187 INFO Cache enabled lookup
+2025-06-08 22:41:29,187 INFO Cache miss for key: TSLA
+2025-06-08 22:41:29,189 INFO Cache miss: TSLA. Adding to cache.
+2025-06-08 22:41:29,190 INFO Cache enabled lookup
+2025-06-08 22:41:29,190 INFO Cache hit for key: TSLA
+2025-06-08 22:41:29,191 INFO Cache hit: TSLA
+.2025-06-08 22:41:29,192 INFO setUp: Clearing cache and resetting test client
+2025-06-08 22:41:29,192 INFO -----Test 3: 'POST /invalidate/<name>' should clear Cache Entry-----
+2025-06-08 22:41:29,192 INFO Cache enabled lookup
+2025-06-08 22:41:29,193 INFO Cache miss for key: AMD
+2025-06-08 22:41:29,194 INFO Cache miss: AMD. Adding to cache.
+2025-06-08 22:41:29,195 INFO Invalidated AMD from cache.
+2025-06-08 22:41:29,195 INFO Cache invalidated: AMD
+2025-06-08 22:41:29,196 INFO Cache enabled lookup
+2025-06-08 22:41:29,196 INFO Cache miss for key: AMD
+2025-06-08 22:41:29,198 INFO Cache miss: AMD. Adding to cache.
+.2025-06-08 22:41:29,199 INFO setUp: Clearing cache and resetting test client
+2025-06-08 22:41:29,199 INFO -----Test 4: 'GET /stocks/<name>' when catalog-service request fails-----
+2025-06-08 22:41:29,200 INFO Cache enabled lookup
+2025-06-08 22:41:29,200 INFO Cache miss for key: NoSuchStock
+.2025-06-08 22:41:29,200 INFO setUp: Clearing cache and resetting test client
+2025-06-08 22:41:29,201 INFO -----Test 5: 'POST /orders' success scenario-----
+.2025-06-08 22:41:29,202 INFO setUp: Clearing cache and resetting test client
+2025-06-08 22:41:29,202 INFO -----Test 6: 'POST /orders' failure scenario-----
+.2025-06-08 22:41:29,203 INFO setUp: Clearing cache and resetting test client
+2025-06-08 22:41:29,204 INFO -----Test 7: 'GET /orders/<id>' success scenario-----
+.2025-06-08 22:41:29,204 INFO setUp: Clearing cache and resetting test client
+2025-06-08 22:41:29,205 INFO -----Test 8: 'GET /orders/<id>' failure scenario-----
+.
+----------------------------------------------------------------------
+Ran 8 tests in 0.038s
+
+OK
