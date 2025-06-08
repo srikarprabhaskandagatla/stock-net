@@ -6,7 +6,7 @@ from threading import Thread
 logging.basicConfig(level=logging.INFO, format="%(asctime)s %(levelname)s %(message)s")
 logger = logging.getLogger(__name__)
 
-# Reference: https://www.geeksforgeeks.org/lru-cache-implementation/
+# Reference: https://flask.palletsprojects.com/en/stable/quickstart/
 app = Flask(__name__)
 
 # Global Environment variables from Docker Compose file
