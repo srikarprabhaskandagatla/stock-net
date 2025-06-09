@@ -1,6 +1,34 @@
 # Design Document With Paxos
-## 1. Introduction
-# Design Document With Paxos
+This document provides an in-depth overview of the Stock Bazaar application's architecture and design, with a focus on reliability, consistency, and fault tolerance achieved through the Paxos consensus protocol. It explains the roles of each microservice, the flow of data and requests, and the mechanisms for caching, replication, and recovery. The document serves as a reference for understanding how Paxos is integrated into the system to ensure strong consistency and high availability, even in the presence of failures.
+
+# Table of Contents
+<nav>
+  <ul>
+    <li><a href="#1-introduction">1. Introduction</a>
+      <ul>
+        <li><a href="#11-purpose">1.1 Purpose</a></li>
+        <li><a href="#12-scope">1.2 Scope</a></li>
+        <li><a href="#13-system-overview">1.3 System Overview</a></li>
+      </ul>
+    </li>
+    <li><a href="#2-flow-interactions">2. Flow Interactions</a></li>
+    <li><a href="#3-component-design">3. Component Design</a>
+      <ul>
+        <li><a href="#31-client-service-client_load_testpy">3.1 Client Service (client_load_test.py)</a></li>
+        <li><a href="#32-catalog-service-catalog_servicepy">3.2 Catalog Service (catalog_service.py)</a></li>
+        <li><a href="#33-front-end-service-frontend_servicepy">3.3 Front-end Service (frontend_service.py)</a></li>
+        <li><a href="#34-order-service-order_servicepy">3.4 Order Service (order_service.py)</a></li>
+      </ul>
+    </li>
+    <li><a href="#4-data-models">4. Data Models</a></li>
+    <li><a href="#5-communication-protocols">5. Communication Protocols</a></li>
+    <li><a href="#6-caching-strategy-front-end">6. Caching Strategy (Front-end)</a></li>
+    <li><a href="#7-replication-strategy-order-service">7. Replication Strategy (Order Service)</a></li>
+    <li><a href="#8-fault-tolerance-strategy">8. Fault Tolerance Strategy</a></li>
+    <li><a href="#9-consensus-protocol-paxos">9. Consensus Protocol (Paxos)</a></li>
+    <li><a href="#10-deployment-docker-compose-and-aws">10. Deployment (Docker Compose and AWS)</a></li>
+  </ul>
+</nav>
 
 ## 1. Introduction
 This document describes the design and architecture of the Stock Bazaar application, focusing on reliability, consistency, and fault tolerance using the Paxos consensus protocol. The system uses microservices—Client, Front-end, Catalog, and Order services—with clear roles. By leveraging caching, replication, and Paxos, the application achieves high availability, strong consistency for orders, and resilience to failures. This documentation covers component interactions, data models, communication protocols, and strategies for caching, replication, and fault tolerance.
