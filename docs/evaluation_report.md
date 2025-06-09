@@ -290,7 +290,7 @@ client-service | INFO Lookup failed: {'code': 404, 'message': 'No stock found.'}
 client-service | INFO Lookup successful: {'name': 'NFLX', 'price': 700.0, 'quantity': 100}
 ```
 
-*All output logs are shown for reference only. Please execute the application on your machine or in the cloud to verify its operation by following the same steps.*
+**NOTE** - *All output logs are shown for reference only. Please execute the application on your machine or in the cloud to verify its operation by following the same steps.*
 
 # Conclusion
 Hence, the two-tier application demonstrates correct functionality, with both the frontend and backend services interacting as expected. The system successfully handles order processing, stock lookups, caching, and leader election during failures, confirming that the overall architecture operates reliably under various scenarios. Additionally, when an invalid stock symbol is looked up, the system correctly returns an error response, while valid stock lookups return the expected results from the catalog.
