@@ -1,7 +1,30 @@
 # Design Document
+This document provides a comprehensive overview of the architecture, components, and design decisions for the Stock Net microservices-based stock trading simulation system. It outlines the goals, requirements, service interactions, caching strategy, replication, fault tolerance mechanisms, and deployment approach, serving as a reference for both implementation and future enhancements.
+
+# Table of Contents
+<nav>
+  <ul>
+    <li><a href="#1-overview">1. Overview</a></li>
+    <li><a href="#2-goals-and-requirements">2. Goals and Requirements</a></li>
+    <li><a href="#3-flow-description">3. Flow Description</a></li>
+    <li><a href="#4-detailed-design">4. Detailed Design</a>
+      <ul>
+        <li><a href="#41-client-service-client_load_testpy">4.1. Client Service (client_load_test.py)</a></li>
+        <li><a href="#42-catalog-service-catalog_servicepy">4.2. Catalog Service (catalog_service.py)</a></li>
+        <li><a href="#43-front-end-service-frontend_servicepy">4.3. Front-end Service (frontend_service.py)</a></li>
+        <li><a href="#44-order-service-order_servicepy">4.4. Order Service (order_service.py)</a></li>
+      </ul>
+    </li>
+    <li><a href="#5-data-storage">5. Data Storage</a></li>
+    <li><a href="#6-caching-strategy">6. Caching Strategy</a></li>
+    <li><a href="#7-replication-and-fault-tolerance">7. Replication and Fault Tolerance</a></li>
+    <li><a href="#8-api-definitions-summary">8. API Definitions Summary</a></li>
+    <li><a href="#9-deployment-docker-and-aws">9. Deployment (Docker and AWS)</a></li>
+    <li><a href="#10-testing">10. Testing</a></li>
+  </ul>
+</nav>
 
 ## 1. Overview
-
 This document details about the microservices-based system for stock trading simulation. The primary goal is to improve performance, reliability, and fault tolerance by introducing caching, replication, and failure handling mechanisms. The system consists of a Front-end service, a Catalog service, and an Order service. This incorporates the requirements specified for caching (Part 1), replication (Part 2), and fault tolerance (Part 3).
 
 ## 2. Goals and Requirements
