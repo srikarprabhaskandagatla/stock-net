@@ -34,7 +34,7 @@ This is a 2-Tier Toy Stock Trading System, designed with two distinct layers: a 
 # How does it work?
 The system consists of a Front-end service, a Catalog service, and an Order service. The client works according to the instructions shown in [Instructions](/docs/instructions_cs677.md). The client contacts the frontend service with either a lookup or trade request (BUY/SELL). The frontend service takes care of the rest. For a lookup, it checks the cache; if the cache is missed, it contacts the catalog service. For a trade request, the frontend contacts the order service, and to update the catalog log, the order service contacts the catalog service directly.
 
-This is achieved using Flask and a thread-per-request model. There are two versions of this app: one without the Paxos Consensus Algorithm and another with Paxos. For more detail, design docs for both the Non-Paxos and Paxos versions are provided.
+This system is implemented using Flask with a thread-per-request model. It is available in two versions: one without the Paxos Consensus Algorithm and another with Paxos integrated. For more details, refer to the [Design Documentation (Non-Paxos)](/docs/design_documentation.md) and [Design Documentation (Paxos)](/docs/design_documentation_paxos.md).
 
 The final outputs, such as latency plots over probability and replication workings, are given in [Evaluation Report](/docs/evaluation_report.md).
 
