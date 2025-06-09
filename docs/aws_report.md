@@ -10,8 +10,16 @@ Cloud computing is fundamental to modern software development, providing scalabl
     <li><a href="#accessing-the-ec2-instance">Accessing the EC2 Instance</a></li>
     <li><a href="#installing-software-on-the-ec2-instance">Installing Software on the EC2 Instance</a></li>
     <li><a href="#uploading-the-project-to-the-ec2-instance">Uploading the Project to the EC2 Instance</a></li>
-    <li><a href="#docker-implementation-on-the-ec2-instance">Docker Implementation on the EC2 Instance</a></li>
-    <li><a href="#running-paxos-on-aws">Running Paxos on AWS</a></li>
+    <li><a href="#docker-implementation-on-the-ec2-instance">Docker Implementation on the EC2 Instance</a>
+          <ul>
+            <li><a href="#latency-plot-non-paxos-cache-enabled-aws">Latency Plot - Non Paxos - Cache Enabled - AWS</a></li>
+          </ul>
+    </li>
+    <li><a href="#running-paxos-on-aws">Running Paxos on AWS</a>
+          <ul>
+            <li><a href="#latency-plot-paxos-cache-enabled-aws">Latency Plot - Paxos - Cache Enabled - AWS</a></li>
+          </ul>
+    </li>
     <li><a href="#creating-an-image-of-the-ec2-instance">Creating an Image of the EC2 Instance</a></li>
     <li><a href="#terminating-the-ec2-instance">Terminating the EC2 Instance</a></li>
     <li><a href="#ec2-instance-termination-time">EC2 Instance Termination Time</a></li>
@@ -118,7 +126,10 @@ Clients could then connect using the public IP and port, e.g., `http://AWS_URL:9
 
 Running the services in the cloud increased latency, with lookup times starting at nearly 100ms (using the cached version). This demonstrates the impact of network overhead and cloud infrastructure on application performance.
 
-![Latency Plot - No Paxos Cache Enabled](../outputs/docs_images/2_latency_plot_no_paxos_cache_enabled.png)
+### Latency Plot - Non Paxos - Cache Enabled - AWS
+Lookup latency starts high and remains relatively stable, while order latency spikes at 20% trade probability, dips at 40%, and then rises again. Order query latency increases sharply at higher trade probabilities, reaching its peak at 80%.
+
+![Latency Plot - No Paxos Cache Enabled](../outputs/docs_images/2_aws_latency_plot_no_paxos_cache_enabled.png)
 
 ## Running Paxos on AWS
 
@@ -130,7 +141,10 @@ sudo ./build.sh paxos
 
 The same setup steps were repeated, and the Paxos version was run. Latency results are shown below, highlighting the performance characteristics of the distributed consensus protocol in a cloud environment:
 
-![Latency Plot - Paxos Cache Enabled](../outputs/docs_images/3_latency_plot_paxos_cache_enabled.png)
+### Latency Plot - Paxos - Cache Enabled - AWS
+Lookup latency starts high, dips at 20%, and then rises again at higher trade probabilities. Order latency and order query latency both increase sharply at 20%, with order query latency peaking at 40% and then gradually decreasing, while order latency continues to rise and reaches its highest value at 80% trade probability.
+
+![Latency Plot - Paxos Cache Enabled](../outputs/docs_images/3_aws_latency_plot_paxos_cache_enabled.png)
 
 **NOTE** - Remember to stop the client before using SCP, so it does not automatically run on the AWS EC2 instance. You can do this by commenting out the client section in both `docker-compose.yml` and `docker-compose.paxos.yml`. This allows you to connect to the local client and start trading from your local machine.
 
