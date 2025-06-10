@@ -60,13 +60,13 @@ Start all conatiners (Paxos):
 
 This command will bring up all the microservice images (client, frontend, order (all three replicas), catalog) in Docker in the following order: `Catalog Service -> Order Service -> Frontend Service -> Client Service -> Test Service`
 
-Catalog Service will generate catalog_service.csv under the catalog-service folder (`src/catalog-service/ for non-Paxos, for Paxos - src_paxos/catalog-service/`), which holds the catalog data.
+- Catalog Service will generate catalog_service.csv under the catalog-service folder (`src/catalog-service/ for non-Paxos, for Paxos - src_paxos/catalog-service/`), which holds the catalog data.
 
-Order Service will generate `order_service-1, 2, and 3` (`src/order-service/ for non-Paxos, for Paxos - src_paxos/order-service/`) under the order-service folder, which contains all the transactions made.
+- Order Service will generate `order_service-1, 2, and 3` (`src/order-service/ for non-Paxos, for Paxos - src_paxos/order-service/`) under the order-service folder, which contains all the transactions made.
 
-Client Service will generate load_test.png (`src/client/ for non-Paxos, for Paxos - src/client/`) under the client folder, which plots lookup, order query, and trade latency.
+- Client Service will generate load_test.png (`src/client/ for non-Paxos, for Paxos - src/client/`) under the client folder, which plots lookup, order query, and trade latency.
 
-Test Service will generate unit and integration test log results under the test/output folder, holding the output of the tests.
+- Test Service will generate unit and integration test log results under the `test/output` (Non-Paxos) and `test_paxos/output` (Paxos) folder, holding the output of the tests.
 
 ### Stop the Docker Container
 
