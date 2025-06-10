@@ -1,4 +1,4 @@
-# Design Document
+# Design Document Without Paxos
 This document provides a comprehensive overview of the architecture, components, and design decisions for the Stock Net microservices-based stock trading simulation system. It outlines the goals, requirements, service interactions, caching strategy, replication, fault tolerance mechanisms, and deployment approach, serving as a reference for both implementation and future enhancements.
 
 # Table of Contents
