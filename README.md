@@ -39,16 +39,21 @@ This system is implemented using Flask with a thread-per-request model. It is av
 The final outputs, such as latency plots over probability and replication workings, are given in [Evaluation Report](/docs/evaluation_report.md).
 
 # Execution Steps
+Firstly, clone this repository using the command below:
+```bash
+git clone https://github.com/srikarprabhaskandagatla/stock-net.git
+```
+
 ### Start the Docker Container
 
 To start a Docker container, run the following script under root folder:
 
-For changes without paxos:
+Start all conatiners (Non-Paxos):
 ```bash
 ./bash.sh
 ```
 
-For changes with paxos:
+Start all conatiners (Paxos):
 ```bash
 ./bash.sh paxos
 ```
@@ -67,18 +72,18 @@ Test Service will generate unit and integration test log results under the test/
 
 To stop a Docker containers, run the following script under root folder:
 
-For changes without paxos:
+Stop all conatiners (Non-Paxos):
 ```bash
 docker-compose down
 ```
 
-For changes with paxos:
+Stop all conatiners (Non-Paxos):
 ```bash
 docker-compose -f docker-compose.paxos.yml down
 ```
 
 # Run the Code on Cloud
-The application (Frontend Service, Catalog Service, and Order Service) is hosted on AWS and is connected to the local client using an HTTP link. Detailed information is provided in the following [AWS Report](/docs/aws_report.md).
+The application (`Frontend Service`, `Catalog Service`, and `Order Service`) is hosted on AWS and is connected to the local client using an HTTP link. Detailed information is provided in the following [AWS Report](/docs/aws_report.md).
 
 # Contribution
 If you have any feedback, suggestions, or find a bug, feel free to open an issue or submit a pull request — your contributions are always welcome!
