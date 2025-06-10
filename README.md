@@ -68,6 +68,8 @@ This command will bring up all the microservice images (client, frontend, order 
 
 - Test Service will generate unit and integration test log results under the `test/output` (Non-Paxos) and `test_paxos/output` (Paxos) folder, holding the output of the tests.
 
+`client.py` contains the client logic, but it does not include any plotting functionality. Therefore, *`Client_load_test.py` is used as the client in both Non-Paxos and Paxos versions which has the plotting functionality*.
+
 ### Stop the Docker Container
 
 To stop a Docker containers, run the following script under root folder:
