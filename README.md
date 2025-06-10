@@ -1,6 +1,6 @@
 <h1 align="center">
   <br>
-    Stock Net: 2 Tier Stock Trading System
+    Stock Net: 2-Tier Stock Trading System
   <br>
 </h1>
 
