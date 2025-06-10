@@ -38,6 +38,8 @@ This system is implemented using Flask with a thread-per-request model. It is av
 
 The final outputs, such as latency plots over probability and replication workings, are given in [Evaluation Report](/docs/evaluation_report.md).
 
+*All output plots can be found in the `outputs/latency_plots` and `outputs/docs_images` folders, while all design documents and reports are located in the `docs` folder.*
+
 # Execution Steps
 Firstly, clone this repository using the command below:
 ```bash
